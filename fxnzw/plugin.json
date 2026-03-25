@@ -1,0 +1,18 @@
+{
+  "metadata": {
+    "name": "fxnzw",
+    "author": "Andy",
+    "version": 1,
+    "source": "https://www.fxnzw.com",
+    "regexp": "fxnzw.com/fxnbook/\\d+\\.html",
+    "description": "Hỗ trợ đọc truyện từ trang fxnzw.com",
+    "locale": "zh_CN",
+    "type": "chinese_novel"
+  },
+  "script": {
+    "detail": "src/detail.js",
+    "toc": "src/toc.js",
+    "chap": "src/chap.js",
+    "search": "src/search.js"
+  }
+}
