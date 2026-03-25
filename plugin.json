@@ -1,6 +1,24 @@
-[
-  {
-    "name": "fxnzw",
-    "url": "fxnzw/plugin.json"
-  }
-]
+{
+  "metadata": {
+    "author": "Andy",
+    "description": "😉"
+  },
+  "data": [
+
+    {
+      "name": "fxnzw",
+      "author": "Andy",
+      "path": "https://github.com/andyhoangds/andy-vbook-ext/blob/main/fxnzw/plugin.zip",
+      "version": 1,
+      "source": "https://www.fxnzw.com",
+      "icon": "https://raw.githubusercontent.com/Moleys/vbook-ext/main/trxsme/icon.png",
+      "regexp": "fxnzw.com/fxnbook/\\d+\\.html",
+      "description": "Hỗ trợ đọc truyện từ trang fxnzw.com",
+      "locale": "zh_CN",
+      "type": "chinese_novel"
+    }
+  
+
+  ]
+}
+
