@@ -10,9 +10,9 @@
     "type": "chinese_novel"
   },
   "script": {
-    "detail": "src/detail.js",
-    "toc": "src/toc.js",
-    "chap": "src/chap.js",
-    "search": "src/search.js"
+    "detail": "detail.js",
+    "toc": "toc.js",
+    "chap": "chap.js",
+    "search": "search.js"
   }
 }
