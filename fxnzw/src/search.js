@@ -1,35 +1,44 @@
 function execute(key, page) {
-    if (!page) page = '1';
+    // 1. Tái tạo đúng logic của hàm Search() trên web
+    // Thay dấu ":" thành khoảng trắng và nối đuôi .html
+    let keyword = key.replace(":", " ");
+    let searchUrl = "https://www.fxnzw.com/fxnlist/" + encodeURI(keyword) + ".html";
     
-    // Gửi yêu cầu tìm kiếm (fxnzw thường dùng GET với param searchkey)
-    let response = fetch("https://www.fxnzw.com/search.php", {
-        method: "GET",
-        queries: {
-            "searchkey": key,
-            "page": page
+    Console.log("Đường dẫn tìm kiếm thực tế: " + searchUrl);
+
+    // 2. Tải trang kết quả
+    let response = Http.get(searchUrl).string();
+
+    if (response) {
+        let doc = Html.parse(response);
+        let list = [];
+
+        // 3. Sử dụng Selector #ListContents mà Hiếu đã soi được từ Inspector
+        let items = doc.select("#ListContents > div[style*='margin: 10px']");
+
+        for (let i = 0; i < items.size(); i++) {
+            let item = items.get(i);
+
+            // Bóc tách thông tin dựa trên cấu trúc Class chuẩn
+            let name = item.select("a.fonttext").text();
+            let link = item.select("a.fonttext").attr("href");
+            let author = item.select("a[href*='/fxnlist/']").first().text();
+            let cover = item.select("img").attr("src");
+            let description = item.select(".neirongh5").text();
+
+            if (name && link) {
+                list.push({
+                    name: name,
+                    link: link,
+                    author: author || "Chưa rõ",
+                    description: description || "",
+                    cover: cover || "https://www.fxnzw.com/images/default.jpg",
+                    host: "https://www.fxnzw.com"
+                });
+            }
         }
-    });
 
-    let doc = response.html();
-    let results = [];
-    
-    // Bóc tách danh sách truyện từ trang kết quả
-    // Selector này cần khớp với cấu trúc thực tế của trang search
-    let items = doc.select(".search-list li"); 
-    
-    items.forEach(item => {
-        results.push({
-            name: item.select(".bookname").text(),
-            link: item.select("a").first().attr("href"),
-            cover: item.select("img").attr("src"),
-            description: item.select(".intro").text(),
-            host: "https://www.fxnzw.com"
-        });
-    });
-
-    // Tính toán trang tiếp theo (nếu có)
-    let next = (parseInt(page) + 1).toString();
-    
-    // Trả về danh sách kết quả và vị trí trang tiếp theo [cite: 13, 25]
-    return Response.success(results, next);
+        return Response.success(list);
+    }
+    return null;
 }

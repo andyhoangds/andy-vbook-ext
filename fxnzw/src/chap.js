@@ -1,20 +1,20 @@
 function execute(url) {
-    // Tải mã nguồn của chương truyện
-    let response = fetch(url);
-    let doc = response.html();
+    let response = Http.get(url).string();
+    if (response) {
+        let doc = Html.parse(response);
+        
+        // [Suy luận] Nội dung truyện thường nằm trong div có id="content" hoặc tương tự
+        // Cậu hãy soi mã nguồn trên PC để điền đúng Selector vào đây nhé
+        let content = doc.select("#Lab_Contents").html();
 
-    // Loại bỏ các thẻ script và quảng cáo lọt vào trong nội dung
-    // Chúng ta dùng selector để nhắm thẳng vào các phần tử rác
-    doc.select("#content script").remove();
-    doc.select("#content style").remove();
-    
-    // Lấy nội dung HTML thô từ thẻ chứa truyện
-    let rawContent = doc.select("#content").html();
+        // Bước dọn dẹp nội dung để tăng trải nghiệm đọc
+        if (content) {
+            content = content.replace(/&nbsp;/g, " ") // Đổi khoảng trắng mã hóa thành khoảng trắng thường
+                             .replace(/<br\s*\/?>/gi, "\n") // Đổi thẻ <br> thành xuống dòng
+                             .replace(/Thêm các từ khóa quảng cáo cần xóa ở đây/g, "　　……：mayiwsk←→新书推荐：");
+        }
 
-    // Sử dụng hàm bổ trợ Html.clean để chỉ giữ lại các thẻ p và br
-    // Giúp nội dung hiển thị trên vBook mượt mà và đúng định dạng
-    let cleanContent = Html.clean(rawContent, ["p", "br"]);
-
-    // Trả về nội dung sạch cho người đọc
-    return Response.success(cleanContent);
+        return Response.success(content);
+    }
+    return null;
 }

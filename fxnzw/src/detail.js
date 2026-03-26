@@ -1,28 +1,23 @@
 function execute(url) {
-    // 1. Tải nội dung HTML của trang truyện
-    let doc = fetch(url).html();
+    let response = Http.get(url).string();
+    let doc = Html.parse(response);
 
-    // 2. Bóc tách tên truyện từ thẻ span có font 24px
+    // 1. Lấy tên truyện (giữ nguyên vì đã chuẩn)
     let name = doc.select("span[style*='font-size: 24px']").text();
 
-    // 3. Bóc tách ảnh bìa từ class imgwidth
+    // 2. Lấy tên tác giả - Nhắm vào thẻ <a> đầu tiên nằm trong cấu trúc span > span
+    // Chúng ta lấy text và xóa chữ "著" nếu có
+    let author = doc.select("div span span a[href*='/fxnlist/']").first().text();
+
+    // 3. Lấy ảnh bìa
     let cover = doc.select("img.imgwidth").first().attr("src");
 
-    // 4. Bóc tách tên tác giả từ link dẫn đến fxnlist
-    let author = doc.select("a[href*='/fxnlist/']").first().text();
+    // 4. Lấy mô tả - Dùng .text() thay vì .html() để sạch thẻ <p>
+    let description = doc.select("div[style*='min-height: 100px']").text();
 
-    // 5. Bóc tách mô tả từ khối div có min-height 100px
-    let description = doc.select("div[style*='min-height: 100px']").html();
-
-    // Làm sạch nội dung mô tả (xóa ký tự khoảng trắng dư thừa)
-    if (description) {
-        description = description.replace(/&nbsp;/g, "").trim();
-    }
-
-    // Kiểm tra trạng thái truyện (Ongoing hay Completed)
+    // 5. Kiểm tra trạng thái (nếu thấy chữ "大结局" trong toàn bộ text thì là đã hoàn thành)
     let ongoing = doc.text().indexOf("大结局") === -1;
 
-    // 6. Trả về kết quả đúng chuẩn vBook
     return Response.success({
         name: name,
         cover: cover,

@@ -1,24 +1,37 @@
 function execute(url) {
-    // 1. Tải nội dung HTML của trang mục lục [cite: 17, 21]
-    let response = fetch(url);
-    let doc = response.html();
-
-    // 2. Xác định vùng chứa danh sách chương
-    // Trên fxnzw, danh sách chương thường nằm trong thẻ div có id là 'list' hoặc 'chapterlist'
-    let el = doc.select("#list dl dd a"); 
+    // 1. Chuyển đổi link linh hoạt
+    let tocUrl = url.replace("fxnbook", "fxnchapter");
+    let response = Http.get(tocUrl).string();
     
-    let list = [];
-    for (let i = 0; i < el.size(); i++) {
-        let e = el.get(i);
+    if (response) {
+        let doc = Html.parse(response);
+        let list = [];
         
-        // 3. Thêm từng chương vào danh sách 
-        list.push({
-            name: e.text(),           // Tên chương [cite: 16]
-            url: e.attr("href"),      // Đường dẫn chương [cite: 16]
-            host: "https://www.fxnzw.com" // Host để app tự nối link nếu là link rút gọn [cite: 16]
-        });
-    }
+        // 2. CHIẾN THUẬT MỚI: Nhặt tất cả thẻ <a> có link chứa '/fxnread/'
+        // Bỏ qua div.listmain để tránh việc sai lệch cấu trúc giữa các giao diện
+        let items = doc.select("a[href*='/fxnread/']");
 
-    // 4. Trả về kết quả thành công cho vBook [cite: 25]
-    return Response.success(list);
+        for (let i = 0; i < items.size(); i++) {
+            let item = items.get(i);
+            let name = item.text();
+            let path = item.attr("href");
+
+            // Chỉ đẩy vào danh sách nếu có đủ tên và đường dẫn
+            if (name && path) {
+                list.push({
+                    name: name,
+                    url: path,
+                    host: "https://www.fxnzw.com"
+                });
+            }
+        }
+
+        // 3. Xử lý "rác" mục lục: 
+        // Trang này thường lặp lại 12 chương mới nhất ở đầu rồi mới đến danh sách từ chương 1.
+        // Nếu cậu thấy bị lặp, hãy dùng: return Response.success(list.slice(12));
+        
+        Console.log("Số lượng chương tìm thấy: " + list.length);
+        return Response.success(list);
+    }
+    return null;
 }
