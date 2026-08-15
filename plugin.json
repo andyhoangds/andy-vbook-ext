@@ -5,6 +5,18 @@
   },
   "data": [
     {
+      "name": "Truyện Tranh Conan",
+      "author": "Andy",
+      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/conan/plugin.zip",
+      "version": 1,
+      "source": "https://truyentranhconan.com",
+      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/conan/icon.png",
+      "regexp": "(www\\\\.)?truyentranhconan\\\\.com/?$",
+      "description": "Đọc Thám tử lừng danh Conan trên truyentranhconan.com",
+      "locale": "vi_VN",
+      "type": "comic"
+    },
+    {
       "name": "全本小说网",
       "author": "Andy",
       "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/quanben/plugin.zip",
