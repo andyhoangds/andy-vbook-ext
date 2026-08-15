@@ -2,7 +2,7 @@
   "metadata": {
     "name": "NetTruyen ID",
     "author": "vBook",
-    "version": 1,
+    "version": 2,
     "source": "https://nettruyen.id",
     "regexp": "(www\\.)?nettruyen\\.id/truyen-tranh/[^/]+/?$",
     "description": "Đọc truyện tranh trên nettruyen.id",
