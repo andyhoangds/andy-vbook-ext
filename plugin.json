@@ -8,7 +8,7 @@
       "name": "全本小说网",
       "author": "Andy",
       "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/quanben/plugin.zip",
-      "version": 1,
+      "version": 2,
       "source": "https://quanben-xiaoshuo.com",
       "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/quanben/icon.png",
       "regexp": "quanben-xiaoshuo\\\\.com/n/[^/]+/?$",
