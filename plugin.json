@@ -5,6 +5,18 @@
   },
   "data": [
     {
+      "name": "全本小说网",
+      "author": "Andy",
+      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/quanben/plugin.zip",
+      "version": 1,
+      "source": "https://quanben-xiaoshuo.com",
+      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/quanben/icon.png",
+      "regexp": "quanben-xiaoshuo\\\\.com/n/[^/]+/?$",
+      "description": "Đọc truyện chữ Trung trên 全本小说网, dịch Vietphrase trong app",
+      "locale": "zh_CN",
+      "type": "chinese_novel"
+    },
+    {
       "name": "飞翔鸟中文",
       "author": "Andy",
       "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/fxnzw/plugin.zip",
