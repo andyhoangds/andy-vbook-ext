@@ -5,6 +5,18 @@
   },
   "data": [
     {
+      "name": "NetTruyen.id",
+      "author": "Andy",
+      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/nettruyenid/plugin.zip",
+      "version": 1,
+      "source": "https://nettruyen.id",
+      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/nettruyenid/icon.png",
+      "regexp": "(www\\\\.)?nettruyen\\\\.id/truyen-tranh/[^/]+/?$",
+      "description": "Đọc truyện tranh trên nettruyen.id",
+      "locale": "vi_VN",
+      "type": "comic"
+    },
+    {
       "name": "HentaiVNReal",
       "author": "Andy",
       "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/hentaivnreal/plugin.zip",
