@@ -9,13 +9,13 @@ function execute(key, page) {
             url = BASE_URL + "/tim-kiem-nang-cao?keyword=" + encodeURIComponent(q) + "&page=" + page;
         }
     }
-    let response = httpGet(url);
-    if (!response.ok) return Response.error("HTTP " + response.status);
-    let doc = response.html();
-    let data = parseBookList(doc);
+    let r = fetchDoc(url);
+    if (!r.ok) return Response.error("HTTP " + r.status);
+    let data = parseBookList(r.doc);
+    if (data.length === 0) data = parseBookListRegex(r.html);
     let next = "";
     try {
-        next = nextPageUrl(url, doc);
+        next = nextPageUrl(url, r.doc);
     } catch (e) {
         next = "";
     }

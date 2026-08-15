@@ -2,9 +2,9 @@ load('config.js');
 function execute(url) {
     url = normalizeIncomingUrl(url);
     if (!url) return Response.error("Thiếu URL truyện. Dán ví dụ: https://nettruyen.id/truyen-tranh/toi-tro-thanh-chong-cua-giao-chu-ma-giao");
-    let response = httpGet(url);
-    if (!response.ok) return Response.error("HTTP " + response.status);
-    let doc = response.html();
+    let r = fetchDoc(url);
+    if (!r.ok) return Response.error("HTTP " + r.status);
+    let doc = r.doc;
 
     let nameEl = doc.select("h1.title-detail").first();
     if (!nameEl) nameEl = doc.select("h1").first();
@@ -18,10 +18,11 @@ function execute(url) {
     }
 
     let authors = [];
-    doc.select("a[href*='/tac-gia/']").forEach(function (e) {
-        let t = e.text();
+    let authorEls = doc.select("a[href*='/tac-gia/']");
+    for (let i = 0; i < authorEls.size(); i++) {
+        let t = authorEls.get(i).text();
         if (t) authors.push(t);
-    });
+    }
 
     let statusEl = doc.select("li.status .col-xs-8").first();
     let status = statusEl ? statusEl.text() : "";
@@ -31,18 +32,20 @@ function execute(url) {
 
     let genres = [];
     let seen = {};
-    doc.select("li.kind a[href*='/the-loai/']").forEach(function (e) {
+    let genreEls = doc.select("li.kind a[href*='/the-loai/']");
+    for (let i = 0; i < genreEls.size(); i++) {
+        let e = genreEls.get(i);
         let href = e.attr("href");
-        if (!href) return;
+        if (!href) continue;
         let link = absUrl(href).split("?")[0].replace(/\/$/, "");
-        if (seen[link]) return;
+        if (seen[link]) continue;
         seen[link] = true;
         genres.push({
             title: e.text(),
             input: link,
             script: "gen.js"
         });
-    });
+    }
 
     return Response.success({
         name: nameEl ? nameEl.text() : "",

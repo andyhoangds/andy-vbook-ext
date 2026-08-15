@@ -1,15 +1,15 @@
 load('config.js');
 function execute(url, page) {
     if (page) url = page;
-    url = String(url || BASE_URL + "/");
+    url = String(url || BASE_URL + "/?page=1");
     url = normalizeIncomingUrl(url);
-    let response = httpGet(url);
-    if (!response.ok) return Response.error("HTTP " + response.status);
-    let doc = response.html();
-    let data = parseBookList(doc);
+    let r = fetchDoc(url);
+    if (!r.ok) return Response.error("HTTP " + r.status);
+    let data = parseBookList(r.doc);
+    if (data.length === 0) data = parseBookListRegex(r.html);
     let next = "";
     try {
-        next = nextPageUrl(url, doc);
+        next = nextPageUrl(url, r.doc);
     } catch (e) {
         next = "";
     }

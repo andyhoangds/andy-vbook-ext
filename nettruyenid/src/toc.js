@@ -2,23 +2,24 @@ load('config.js');
 function execute(url) {
     url = normalizeIncomingUrl(url);
     if (!url) return Response.error("Thiếu URL truyện. Dán ví dụ: https://nettruyen.id/truyen-tranh/toi-tro-thanh-chong-cua-giao-chu-ma-giao");
-    let response = httpGet(url);
-    if (!response.ok) return Response.error("HTTP " + response.status);
-    let doc = response.html();
+    let r = fetchDoc(url);
+    if (!r.ok) return Response.error("HTTP " + r.status);
     let data = [];
     let seen = {};
-    doc.select("#nt_listchapter li.row .chapter a").forEach(function (a) {
+    let els = r.doc.select("#nt_listchapter li.row .chapter a");
+    for (let i = 0; i < els.size(); i++) {
+        let a = els.get(i);
         let href = a.attr("href");
-        if (!href) return;
+        if (!href) continue;
         let link = absUrl(href);
-        if (seen[link]) return;
+        if (seen[link]) continue;
         seen[link] = true;
         data.push({
             name: a.text(),
             url: link,
             host: BASE_URL
         });
-    });
+    }
     if (data.length === 0) {
         return Response.error("Không lấy được danh sách chương");
     }
