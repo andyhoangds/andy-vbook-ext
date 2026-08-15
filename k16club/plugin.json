@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "name": "16K Club",
+    "author": "vBook",
+    "version": 1,
+    "source": "https://16k.club",
+    "regexp": "(www\\.)?16k\\.club/(pack/\\d+(\\.html)?|top\\.html)/?$",
+    "description": "Album ảnh 16k.club: mỗi trang 30 bộ = 1 quyển, mỗi bộ = 1 chương",
+    "locale": "zh_CN",
+    "language": "javascript",
+    "type": "comic",
+    "tag": "nsfw"
+  },
+  "script": {
+    "home": "home.js",
+    "genre": "genre.js",
+    "detail": "detail.js",
+    "search": "search.js",
+    "toc": "toc.js",
+    "chap": "chap.js"
+  }
+}

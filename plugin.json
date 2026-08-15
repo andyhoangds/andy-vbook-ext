@@ -5,6 +5,19 @@
   },
   "data": [
     {
+      "name": "16K Club",
+      "author": "Andy",
+      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/k16club/plugin.zip",
+      "version": 1,
+      "source": "https://16k.club",
+      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/k16club/icon.png",
+      "regexp": "(www\\\\.)?16k\\\\.club/(pack/\\\\d+(\\\\.html)?|top\\\\.html)/?$",
+      "description": "Album ảnh 16k.club: mỗi trang 30 bộ = 1 quyển, mỗi bộ = 1 chương",
+      "locale": "zh_CN",
+      "type": "comic",
+      "tag": "nsfw"
+    },
+    {
       "name": "笔趣阁 TW",
       "author": "Andy",
       "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/biqugetw/plugin.zip",
