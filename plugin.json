@@ -4,21 +4,29 @@
     "description": "😉"
   },
   "data": [
-
     {
       "name": "fxnzw",
       "author": "Andy",
-      "path": "https://github.com/andyhoangds/andy-vbook-ext/blob/main/fxnzw/plugin.zip",
+      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/fxnzw/plugin.zip",
       "version": 1,
       "source": "https://www.fxnzw.com",
-      "icon": "https://raw.githubusercontent.com/Moleys/vbook-ext/main/trxsme/icon.png",
+      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/fxnzw/icon.png",
       "regexp": "fxnzw.com/fxnbook/\\d+\\.html",
       "description": "Hỗ trợ đọc truyện từ trang fxnzw.com",
       "locale": "zh_CN",
       "type": "chinese_novel"
+    },
+    {
+      "name": "UU看書",
+      "author": "Andy",
+      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/uukanshu/plugin.zip",
+      "version": 4,
+      "source": "https://uukanshu.cc",
+      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/uukanshu/icon.png",
+      "regexp": "(www\\.)?uukanshu\\.cc/book/\\d+/?$",
+      "description": "Đọc truyện chữ Trung trên UU看書, dịch Vietphrase trong app",
+      "locale": "zh_CN",
+      "type": "chinese_novel"
     }
-  
-
   ]
 }
-

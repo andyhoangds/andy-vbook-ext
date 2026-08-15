@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "name": "UU看書",
+    "author": "vBook",
+    "version": 4,
+    "source": "https://uukanshu.cc",
+    "regexp": "(www\\.)?uukanshu\\.cc/book/\\d+/?$",
+    "description": "Đọc truyện chữ Trung trên UU看書, dịch Vietphrase trong app",
+    "locale": "zh_CN",
+    "language": "javascript",
+    "type": "chinese_novel"
+  },
+  "script": {
+    "home": "home.js",
+    "genre": "genre.js",
+    "detail": "detail.js",
+    "search": "search.js",
+    "toc": "toc.js",
+    "chap": "chap.js"
+  }
+}
