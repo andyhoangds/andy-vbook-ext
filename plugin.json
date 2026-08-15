@@ -5,6 +5,18 @@
   },
   "data": [
     {
+      "name": "DiLib Truyện Tranh",
+      "author": "Andy",
+      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/dilib/plugin.zip",
+      "version": 1,
+      "source": "https://dilib.vn",
+      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/dilib/icon.png",
+      "regexp": "(www\\\\.)?dilib\\\\.vn/[^/]+-\\\\d+\\\\.html$",
+      "description": "Đọc truyện tranh trên dilib.vn",
+      "locale": "vi_VN",
+      "type": "comic"
+    },
+    {
       "name": "Truyện Tranh Conan",
       "author": "Andy",
       "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/conan/plugin.zip",
