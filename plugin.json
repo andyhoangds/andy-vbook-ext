@@ -5,6 +5,18 @@
   },
   "data": [
     {
+      "name": "HentaiVNReal",
+      "author": "Andy",
+      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/hentaivnreal/plugin.zip",
+      "version": 1,
+      "source": "https://hentaivnreal.com",
+      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/hentaivnreal/icon.png",
+      "regexp": "(www\\\\.)?hentaivnreal\\\\.com/truyen/[^/]+/?$",
+      "description": "Đọc truyện tranh 18+ trên hentaivnreal.com",
+      "locale": "vi_VN",
+      "type": "comic"
+    },
+    {
       "name": "DiLib Truyện Tranh",
       "author": "Andy",
       "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/dilib/plugin.zip",
