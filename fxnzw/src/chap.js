@@ -1,20 +1,19 @@
+load('config.js');
 function execute(url) {
-    let response = Http.get(url).string();
-    if (response) {
-        let doc = Html.parse(response);
-        
-        // [Suy luận] Nội dung truyện thường nằm trong div có id="content" hoặc tương tự
-        // Cậu hãy soi mã nguồn trên PC để điền đúng Selector vào đây nhé
-        let content = doc.select("#Lab_Contents").html();
-
-        // Bước dọn dẹp nội dung để tăng trải nghiệm đọc
-        if (content) {
-            content = content.replace(/&nbsp;/g, " ") // Đổi khoảng trắng mã hóa thành khoảng trắng thường
-                             .replace(/<br\s*\/?>/gi, "\n") // Đổi thẻ <br> thành xuống dòng
-                             .replace(/Thêm các từ khóa quảng cáo cần xóa ở đây/g, "　　……：mayiwsk←→新书推荐：");
-        }
-
-        return Response.success(content);
+    url = normalizeIncomingUrl(url);
+    if (!url) return Response.error("Thiếu URL chương. Dán ví dụ: https://www.fxnzw.com/fxnread/54234_14852146.html");
+    let response = fetch(url);
+    if (!response.ok) return Response.error("HTTP " + response.status);
+    let doc = response.html();
+    let content = doc.select("#Lab_Contents");
+    if (content.isEmpty()) {
+        return Response.error("Không lấy được nội dung chương");
     }
-    return null;
+    let html = content.html() || "";
+    html = html.replace(/<script[\s\S]*?<\/script>/gi, "");
+    html = html.replace(/<p id="txt_0">[\s\S]*?<\/p>/i, "");
+    html = html.replace(/影书[\s\S]{0,40}yingsx[\s\S]{0,40}/g, "");
+    html = html.replace(/&nbsp;/g, " ");
+    html = html.replace(/&larr;&rarr;：?/g, "");
+    return Response.success(html);
 }

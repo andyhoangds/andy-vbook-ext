@@ -5,14 +5,14 @@
   },
   "data": [
     {
-      "name": "fxnzw",
+      "name": "飞翔鸟中文",
       "author": "Andy",
       "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/fxnzw/plugin.zip",
-      "version": 1,
+      "version": 2,
       "source": "https://www.fxnzw.com",
       "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/fxnzw/icon.png",
-      "regexp": "fxnzw.com/fxnbook/\\d+\\.html",
-      "description": "Hỗ trợ đọc truyện từ trang fxnzw.com",
+      "regexp": "(www\\.)?fxnzw\\.com/fxnbook/\\d+\\.html",
+      "description": "Đọc truyện chữ Trung trên 飞翔鸟中文网 (fxnzw.com), dịch Vietphrase trong app",
       "locale": "zh_CN",
       "type": "chinese_novel"
     },
