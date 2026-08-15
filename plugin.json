@@ -5,6 +5,18 @@
   },
   "data": [
     {
+      "name": "笔趣阁 TW",
+      "author": "Andy",
+      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/biqugetw/plugin.zip",
+      "version": 1,
+      "source": "https://www.biquge.tw",
+      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/biqugetw/icon.png",
+      "regexp": "(www\\\\.)?biquge\\\\.tw/book/\\\\d+(\\\\.html)?/?$",
+      "description": "Đọc truyện chữ Trung trên 笔趣阁 (biquge.tw), dịch Vietphrase trong app",
+      "locale": "zh_CN",
+      "type": "chinese_novel"
+    },
+    {
       "name": "NetTruyen ID",
       "author": "Andy",
       "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/nettruyenid/plugin.zip",

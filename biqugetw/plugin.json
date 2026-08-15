@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "name": "笔趣阁 TW",
+    "author": "vBook",
+    "version": 1,
+    "source": "https://www.biquge.tw",
+    "regexp": "(www\\.)?biquge\\.tw/book/\\d+(\\.html)?/?$",
+    "description": "Đọc truyện chữ Trung trên 笔趣阁 (biquge.tw), dịch Vietphrase trong app",
+    "locale": "zh_CN",
+    "language": "javascript",
+    "type": "chinese_novel"
+  },
+  "script": {
+    "home": "home.js",
+    "genre": "genre.js",
+    "detail": "detail.js",
+    "search": "search.js",
+    "toc": "toc.js",
+    "chap": "chap.js"
+  }
+}
