@@ -63,8 +63,61 @@ function fetchDoc(url) {
     } catch (e) {
         html = "";
     }
-    html = unwrapTemplates(html);
-    return { ok: true, status: 200, doc: Html.parse(html), html: html };
+    let doc = null;
+    try {
+        doc = Html.parse(unwrapTemplates(html));
+    } catch (e2) {
+        try {
+            doc = response.html();
+        } catch (e3) {
+            doc = null;
+        }
+    }
+    return { ok: true, status: 200, doc: doc, html: html };
+}
+
+function collectMangaImages(doc, html) {
+    let data = [];
+    let seen = {};
+    function add(img) {
+        if (!img) return;
+        img = String(img);
+        if (img.indexOf("manga-images") < 0) return;
+        if (img.indexOf("http") !== 0) img = absUrl(img);
+        img = img.replace(/[\"'].*$/, "");
+        if (seen[img]) return;
+        seen[img] = true;
+        let proxy = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&resize_h=0&rewriteMime=image/*&url=" + encodeURIComponent(img);
+        data.push({
+            link: img,
+            fallback: [proxy]
+        });
+    }
+    if (doc) {
+        let imgs = doc.select("img");
+        for (let i = 0; i < imgs.size(); i++) {
+            let e = imgs.get(i);
+            add(e.attr("src"));
+            add(e.attr("data-src"));
+        }
+    }
+    if (data.length === 0 && html) {
+        let re = /https?:\/\/[^\"'\s>]+manga-images\/[^\"'\s>]+/g;
+        let m = re.exec(html);
+        while (m) {
+            add(m[0]);
+            m = re.exec(html);
+        }
+    }
+    if (data.length === 0 && html) {
+        let re2 = /cdn\.hentaivnreal\.com\/manga-images\/[A-Za-z0-9._-]+/g;
+        let m2 = re2.exec(html);
+        while (m2) {
+            add("https://" + m2[0]);
+            m2 = re2.exec(html);
+        }
+    }
+    return data;
 }
 
 function parseBookList(doc) {
