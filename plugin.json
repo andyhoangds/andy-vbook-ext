@@ -45,7 +45,7 @@
       "name": "HentaiVNReal",
       "author": "Andy",
       "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/hentaivnreal/plugin.zip",
-      "version": 3,
+      "version": 4,
       "source": "https://hentaivnreal.com",
       "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/hentaivnreal/icon.png",
       "regexp": "(www\\\\.)?hentaivnreal\\\\.com/truyen/[^/]+/?$",

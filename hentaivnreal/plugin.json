@@ -2,7 +2,7 @@
   "metadata": {
     "name": "HentaiVNReal",
     "author": "vBook",
-    "version": 3,
+    "version": 4,
     "source": "https://hentaivnreal.com",
     "regexp": "(www\\.)?hentaivnreal\\.com/truyen/[^/]+/?$",
     "description": "Đọc truyện tranh 18+ trên hentaivnreal.com",

@@ -28,8 +28,8 @@ function normalizeIncomingUrl(url) {
 }
 
 function isChapterHref(href) {
-    href = String(href || "");
-    return href.indexOf("/chap-") >= 0 || href.indexOf("/phan-") >= 0 || href.indexOf("/chuong-") >= 0;
+    let path = String(href || "").split("?")[0].replace(/\/$/, "");
+    return /\/truyen\/[^\/]+\/.+/.test(path);
 }
 
 function unwrapTemplates(html) {
