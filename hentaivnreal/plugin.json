@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "name": "HentaiVNReal",
+    "author": "vBook",
+    "version": 2,
+    "source": "https://hentaivnreal.com",
+    "regexp": "(www\\.)?hentaivnreal\\.com/truyen/[^/]+/?$",
+    "description": "Đọc truyện tranh 18+ trên hentaivnreal.com",
+    "locale": "vi_VN",
+    "language": "javascript",
+    "type": "comic"
+  },
+  "script": {
+    "home": "home.js",
+    "genre": "genre.js",
+    "detail": "detail.js",
+    "search": "search.js",
+    "toc": "toc.js",
+    "chap": "chap.js"
+  }
+}
