@@ -11,7 +11,7 @@
       "version": 1,
       "source": "https://mimihentai.moe",
       "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/mimihentai/icon.png",
-      "regexp": "(www\\\\.)?mimihentai\\\\.moe/manga/\\\\d+/?$",
+      "regexp": "(www\\.)?mimihentai\\.moe/manga/\\d+/?$",
       "description": "Đọc truyện tranh 18+ trên mimihentai.moe",
       "locale": "vi_VN",
       "type": "comic",
