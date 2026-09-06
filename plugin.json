@@ -5,6 +5,19 @@
   },
   "data": [
     {
+      "name": "MimiHentai",
+      "author": "Andy",
+      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/mimihentai/plugin.zip",
+      "version": 1,
+      "source": "https://mimihentai.moe",
+      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/mimihentai/icon.png",
+      "regexp": "(www\\\\.)?mimihentai\\\\.moe/manga/\\\\d+/?$",
+      "description": "Đọc truyện tranh 18+ trên mimihentai.moe",
+      "locale": "vi_VN",
+      "type": "comic",
+      "tag": "nsfw"
+    },
+    {
       "name": "16K Club",
       "author": "Andy",
       "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/k16club/plugin.zip",
