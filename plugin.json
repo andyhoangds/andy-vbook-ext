@@ -5,6 +5,18 @@
   },
   "data": [
     {
+      "name": "NetTruyen GG",
+      "author": "Andy",
+      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/nettruyenid/plugin.zip",
+      "version": 4,
+      "source": "https://nettruyen.gg",
+      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/nettruyenid/icon.png",
+      "regexp": "(www\\.)?nettruyen\\.gg/truyen-tranh/[^/]+/?$",
+      "description": "Đọc truyện tranh trên nettruyen.gg",
+      "locale": "vi_VN",
+      "type": "comic"
+    },
+    {
       "name": "MimiHentai",
       "author": "Andy",
       "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/mimihentai/plugin.zip",
@@ -41,18 +53,6 @@
       "description": "Đọc truyện chữ Trung trên 笔趣阁 (biquge.tw), dịch Vietphrase trong app",
       "locale": "zh_CN",
       "type": "chinese_novel"
-    },
-    {
-      "name": "NetTruyen ID",
-      "author": "Andy",
-      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/nettruyenid/plugin.zip",
-      "version": 3,
-      "source": "https://nettruyen.id",
-      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/nettruyenid/icon.png",
-      "regexp": "(www\\\\.)?nettruyen\\\\.id/truyen-tranh/[^/]+/?$",
-      "description": "Đọc truyện tranh trên nettruyen.id",
-      "locale": "vi_VN",
-      "type": "comic"
     },
     {
       "name": "HentaiVNReal",

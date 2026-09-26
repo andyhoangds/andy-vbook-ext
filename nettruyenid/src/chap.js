@@ -1,7 +1,7 @@
 load('config.js');
 function execute(url) {
     url = normalizeIncomingUrl(url);
-    if (!url) return Response.error("Thiếu URL chương. Dán ví dụ: https://nettruyen.id/truyen-tranh/toi-tro-thanh-chong-cua-giao-chu-ma-giao/chapter-66");
+    if (!url) return Response.error("Thiếu URL chương. Dán ví dụ: https://nettruyen.gg/truyen-tranh/anh-hung-giai-cap-tu-san/chuong-172");
     let r = fetchDoc(url);
     if (!r.ok) return Response.error("HTTP " + r.status);
     let data = [];
@@ -12,6 +12,7 @@ function execute(url) {
         let img = e.attr("data-src") || e.attr("src") || "";
         if (!img) continue;
         if (img.indexOf("data:") === 0) continue;
+        if (img.indexOf("logo") >= 0) continue;
         let link = absUrl(img);
         if (seen[link]) continue;
         seen[link] = true;
@@ -26,7 +27,8 @@ function execute(url) {
         while ((m = re.exec(r.html)) !== null) {
             let link = m[1];
             if (seen[link]) continue;
-            if (link.indexOf("/chapter_") < 0 && link.indexOf("/page_") < 0) continue;
+            if (link.indexOf("logo") >= 0) continue;
+            if (link.indexOf("/assets/") >= 0) continue;
             seen[link] = true;
             data.push({
                 link: link,

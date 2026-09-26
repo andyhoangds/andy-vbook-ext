@@ -1,12 +1,14 @@
 load('config.js');
 function execute(url) {
     url = normalizeIncomingUrl(url);
-    if (!url) return Response.error("Thiếu URL truyện. Dán ví dụ: https://nettruyen.id/truyen-tranh/toi-tro-thanh-chong-cua-giao-chu-ma-giao");
+    if (!url) return Response.error("Thiếu URL truyện. Dán ví dụ: https://nettruyen.gg/truyen-tranh/anh-hung-giai-cap-tu-san");
     let r = fetchDoc(url);
     if (!r.ok) return Response.error("HTTP " + r.status);
     let data = [];
     let seen = {};
     let els = r.doc.select("#nt_listchapter li.row .chapter a");
+    if (els.size() === 0) els = r.doc.select("#chapter_list li.row .chapter a");
+    if (els.size() === 0) els = r.doc.select("li.row .chapter a[href*='/chuong-']");
     for (let i = 0; i < els.size(); i++) {
         let a = els.get(i);
         let href = a.attr("href");

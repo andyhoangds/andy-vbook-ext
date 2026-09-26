@@ -1,4 +1,4 @@
-let BASE_URL = "https://nettruyen.id";
+let BASE_URL = "https://nettruyen.gg";
 try {
     if (CONFIG_URL) {
         let origin = String(CONFIG_URL).match(/^(https?:\/\/[^\/]+)/);
@@ -30,6 +30,7 @@ function normalizeIncomingUrl(url) {
 function isComicDetailHref(href) {
     if (!href) return false;
     let path = String(href).split("?")[0].replace(/\/$/, "");
+    if (/\/(chuong|chapter)[-_]/.test(path)) return false;
     return /\/truyen-tranh\/[^\/]+$/.test(path);
 }
 

@@ -1,7 +1,7 @@
 load('config.js');
 function execute(url, page) {
     if (page) url = page;
-    url = String(url || BASE_URL + "/?page=1");
+    url = String(url || BASE_URL + "/trang-chu?page=1");
     url = normalizeIncomingUrl(url);
     let r = fetchDoc(url);
     if (!r.ok) return Response.error("HTTP " + r.status);

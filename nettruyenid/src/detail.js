@@ -1,7 +1,7 @@
 load('config.js');
 function execute(url) {
     url = normalizeIncomingUrl(url);
-    if (!url) return Response.error("Thiếu URL truyện. Dán ví dụ: https://nettruyen.id/truyen-tranh/toi-tro-thanh-chong-cua-giao-chu-ma-giao");
+    if (!url) return Response.error("Thiếu URL truyện. Dán ví dụ: https://nettruyen.gg/truyen-tranh/anh-hung-giai-cap-tu-san");
     let r = fetchDoc(url);
     if (!r.ok) return Response.error("HTTP " + r.status);
     let doc = r.doc;
@@ -23,16 +23,24 @@ function execute(url) {
         let t = authorEls.get(i).text();
         if (t) authors.push(t);
     }
+    if (authors.length === 0) {
+        let authorText = doc.select("li.author .col-xs-8").first();
+        if (authorText) {
+            let t = String(authorText.text()).replace(/^\s+|\s+$/g, "");
+            if (t) authors.push(t);
+        }
+    }
 
     let statusEl = doc.select("li.status .col-xs-8").first();
     let status = statusEl ? statusEl.text() : "";
-    let ongoing = status.indexOf("Đang") >= 0;
+    let ongoing = status.indexOf("Đang") >= 0 || status.indexOf("dang") >= 0 || status.indexOf("Dang") >= 0;
 
     let descEl = doc.select(".detail-content p").first();
 
     let genres = [];
     let seen = {};
-    let genreEls = doc.select("li.kind a[href*='/the-loai/']");
+    let genreEls = doc.select("li.kind a[href*='/tim-truyen/']");
+    if (genreEls.size() === 0) genreEls = doc.select("li.kind a[href*='/the-loai/']");
     for (let i = 0; i < genreEls.size(); i++) {
         let e = genreEls.get(i);
         let href = e.attr("href");

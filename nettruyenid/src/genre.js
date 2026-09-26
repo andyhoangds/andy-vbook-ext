@@ -1,17 +1,17 @@
 load('config.js');
 function execute() {
-    let r = fetchDoc(BASE_URL + "/");
+    let r = fetchDoc(BASE_URL + "/tim-truyen");
     if (r.ok) {
         let genres = [];
         let seen = {};
-        let els = r.doc.select("a[href*='/the-loai/']");
+        let els = r.doc.select("a[href*='/tim-truyen/']");
         for (let i = 0; i < els.size(); i++) {
             let e = els.get(i);
             let href = e.attr("href");
             if (!href) continue;
             let path = String(href).split("?")[0];
-            if (!/\/the-loai\/[^\/]+/.test(path)) continue;
-            if (/\/the-loai\/?$/.test(path.replace(/\/$/, ""))) continue;
+            if (!/\/tim-truyen\/[^\/]+/.test(path)) continue;
+            if (/\/tim-truyen\/?$/.test(path.replace(/\/$/, ""))) continue;
             let link = absUrl(path).replace(/\/$/, "");
             if (seen[link]) continue;
             seen[link] = true;
@@ -28,9 +28,9 @@ function execute() {
         }
     }
     return Response.success([
-        { title: "Action", input: BASE_URL + "/the-loai/action", script: "gen.js" },
-        { title: "Manhwa", input: BASE_URL + "/the-loai/manhwa", script: "gen.js" },
-        { title: "Manhua", input: BASE_URL + "/the-loai/manhua", script: "gen.js" },
-        { title: "Manga", input: BASE_URL + "/the-loai/manga", script: "gen.js" }
+        { title: "Action", input: BASE_URL + "/tim-truyen/action-95", script: "gen.js" },
+        { title: "Manhwa", input: BASE_URL + "/tim-truyen/manhwa-11400", script: "gen.js" },
+        { title: "Manhua", input: BASE_URL + "/tim-truyen/manhua", script: "gen.js" },
+        { title: "Manga", input: BASE_URL + "/tim-truyen/manga-112", script: "gen.js" }
     ]);
 }

@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "name": "NetTruyen ID",
+    "name": "NetTruyen GG",
     "author": "vBook",
-    "version": 3,
-    "source": "https://nettruyen.id",
-    "regexp": "(www\\.)?nettruyen\\.id/truyen-tranh/[^/]+/?$",
-    "description": "Đọc truyện tranh trên nettruyen.id",
+    "version": 4,
+    "source": "https://nettruyen.gg",
+    "regexp": "(www\\.)?nettruyen\\.gg/truyen-tranh/[^/]+/?$",
+    "description": "Đọc truyện tranh trên nettruyen.gg",
     "locale": "vi_VN",
     "language": "javascript",
     "type": "comic"
