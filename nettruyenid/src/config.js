@@ -34,6 +34,35 @@ function isComicDetailHref(href) {
     return /\/truyen-tranh\/[^\/]+$/.test(path);
 }
 
+function isPlaceholderCover(url) {
+    if (!url) return true;
+    url = String(url).toLowerCase();
+    if (url.indexOf("data:") === 0) return true;
+    if (url.indexOf("thumb-default") >= 0) return true;
+    if (url.indexOf("logo") >= 0) return true;
+    if (url.indexOf("1x1") >= 0) return true;
+    return false;
+}
+
+function pickCoverFromImg(img) {
+    if (!img) return "";
+    let candidates = [
+        img.attr("data-original"),
+        img.attr("data-retries"),
+        img.attr("data-src"),
+        img.attr("data-lazy-src"),
+        img.attr("src")
+    ];
+    for (let i = 0; i < candidates.length; i++) {
+        let c = candidates[i];
+        if (!c) continue;
+        c = String(c).replace(/^\s+|\s+$/g, "");
+        if (!c || isPlaceholderCover(c)) continue;
+        return absUrl(c);
+    }
+    return "";
+}
+
 function withPage(url, page) {
     url = String(url);
     if (/[?&]page=\d+/.test(url)) {
@@ -114,17 +143,17 @@ function parseBookList(doc) {
         let link = absUrl(href).replace(/\/$/, "");
         if (seen[link]) continue;
         seen[link] = true;
-        let img = e.select("img").first();
-        let cover = "";
-        if (img) {
-            cover = img.attr("src") || img.attr("data-src") || "";
-        }
+        let img = e.select("img.image-thumb").first();
+        if (!img) img = e.select("img.lazy").first();
+        if (!img) img = e.select("img").first();
+        let cover = pickCoverFromImg(img);
         let name = a.attr("title") || a.text();
         let chap = e.select("li.chapter a").first();
+        if (!chap) chap = e.select("a[href*='/chuong-']").first();
         data.push({
             name: name,
             link: link,
-            cover: absUrl(cover),
+            cover: cover,
             description: chap ? chap.text() : "",
             host: BASE_URL
         });

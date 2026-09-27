@@ -8,7 +8,7 @@
       "name": "NetTruyen GG",
       "author": "Andy",
       "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/nettruyenid/plugin.zip",
-      "version": 4,
+      "version": 5,
       "source": "https://nettruyen.gg",
       "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/nettruyenid/icon.png",
       "regexp": "(www\\.)?nettruyen\\.gg/truyen-tranh/[^/]+/?$",

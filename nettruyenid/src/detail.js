@@ -9,13 +9,9 @@ function execute(url) {
     let nameEl = doc.select("h1.title-detail").first();
     if (!nameEl) nameEl = doc.select("h1").first();
 
-    let cover = "";
     let coverEl = doc.select(".detail-info img").first();
-    if (coverEl) cover = coverEl.attr("src") || coverEl.attr("data-src") || "";
-    if (!cover) {
-        let thumb = doc.select("img[src*='thumbnails']").first();
-        if (thumb) cover = thumb.attr("src");
-    }
+    if (!coverEl) coverEl = doc.select("img.image-thumb").first();
+    let cover = pickCoverFromImg(coverEl);
 
     let authors = [];
     let authorEls = doc.select("a[href*='/tac-gia/']");
