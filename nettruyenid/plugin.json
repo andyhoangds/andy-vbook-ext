@@ -2,7 +2,7 @@
   "metadata": {
     "name": "NetTruyen GG",
     "author": "vBook",
-    "version": 5,
+    "version": 6,
     "source": "https://nettruyen.gg",
     "regexp": "(www\\.)?nettruyen\\.gg/truyen-tranh/[^/]+/?$",
     "description": "Đọc truyện tranh trên nettruyen.gg",

@@ -76,10 +76,50 @@ function httpGet(url) {
     return fetch(url, {
         headers: {
             "User-Agent": "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml",
-            "Accept-Language": "vi,en;q=0.9"
+            "Accept": "text/html,application/xhtml+xml,application/json",
+            "Accept-Language": "vi,en;q=0.9",
+            "Referer": BASE_URL + "/",
+            "X-Requested-With": "XMLHttpRequest"
         }
     });
+}
+
+function comicSlugFromUrl(url) {
+    let m = String(url || "").match(/\/truyen-tranh\/([^\/?#]+)/);
+    return m ? m[1] : "";
+}
+
+function chapterUrlFromItem(slug, item) {
+    if (!slug || !item) return "";
+    let num = item.chapter_num;
+    if (num === undefined || num === null || num === "") {
+        let slugChap = item.chapter_slug || "";
+        let m = String(slugChap).match(/(?:chuong|chapter)[-_]?([0-9.]+)/i);
+        if (m) num = m[1];
+    }
+    if (num === undefined || num === null || num === "") return "";
+    return BASE_URL + "/truyen-tranh/" + slug + "/chuong-" + num;
+}
+
+function fetchChapterListApi(slug) {
+    if (!slug) return null;
+    let api = BASE_URL + "/Comic/Services/ComicService.asmx/ChapterList?slug=" + encodeURIComponent(slug);
+    let response = httpGet(api);
+    if (!response || !response.ok) return null;
+    let data = null;
+    try {
+        data = response.json();
+    } catch (e) {
+        try {
+            data = JSON.parse(response.text());
+        } catch (e2) {
+            data = null;
+        }
+    }
+    if (!data) return null;
+    let list = data.data || data;
+    if (!list || !list.length) return null;
+    return list;
 }
 
 function unwrapTemplates(html) {
