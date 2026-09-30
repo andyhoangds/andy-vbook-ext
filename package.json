@@ -1,0 +1,14 @@
+{
+  "name": "andy-vbook-ext",
+  "version": "1.0.0",
+  "description": "vBook reader extensions (scraper plugins) with a local dev harness for testing scripts outside the vBook app.",
+  "private": true,
+  "scripts": {
+    "lint": "node --check fxnzw/src/detail.js && node --check fxnzw/src/toc.js && node --check fxnzw/src/chap.js && node --check fxnzw/src/search.js",
+    "test": "node tools/run.js fxnzw all",
+    "run:plugin": "node tools/run.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0"
+  }
+}
