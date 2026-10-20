@@ -20,12 +20,18 @@ function absUrl(href) {
 
 function normalizeIncomingUrl(url) {
     if (!url) return "";
-    url = String(url).replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
-    url = url.split("#")[0];
+    url = String(url).split("#")[0].split("?")[0];
+    url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?[^:\/\n?]+/, BASE_URL);
     if (/\/truyen\/[^\/]+\/$/.test(url)) {
         url = url.replace(/\/$/, "");
     }
     return url;
+}
+
+function novelUrlFromChapterUrl(url) {
+    url = normalizeIncomingUrl(url);
+    let m = String(url).match(/^(https?:\/\/[^\/]+\/truyen\/[^\/]+)/);
+    return m ? m[1] : url;
 }
 
 function isChapterHref(href) {
@@ -91,12 +97,39 @@ function decodeJsUnicode(str) {
 
 function collectNextFlight(raw) {
     raw = String(raw || "");
+    let marker = "self.__next_f.push([1,\"";
     let joined = "";
-    let re = /self\.__next_f\.push\(\[1,"((?:\\.|[^"\\])*)"\]\)/g;
-    let m = re.exec(raw);
-    while (m) {
-        joined += m[1];
-        m = re.exec(raw);
+    let pos = 0;
+    while (pos < raw.length) {
+        let start = raw.indexOf(marker, pos);
+        if (start < 0) {
+            break;
+        }
+        start += marker.length;
+        let buf = "";
+        let escaped = false;
+        let i = start;
+        for (; i < raw.length; i++) {
+            let ch = raw.charAt(i);
+            if (escaped) {
+                buf += "\\" + ch;
+                escaped = false;
+                continue;
+            }
+            if (ch === "\\") {
+                escaped = true;
+                continue;
+            }
+            if (ch === "\"" && raw.charAt(i + 1) === "]" && raw.charAt(i + 2) === ")") {
+                joined += buf;
+                pos = i + 3;
+                break;
+            }
+            buf += ch;
+        }
+        if (i >= raw.length) {
+            break;
+        }
     }
     return joined;
 }
@@ -121,63 +154,136 @@ function parseLdBook(html) {
 function cleanChapterHtml(html) {
     html = String(html || "");
     html = html.replace(/<script[\s\S]*?<\/script>/gi, "");
-    let idx = html.lastIndexOf("</p>");
-    if (idx >= 0) {
-        html = html.substring(0, idx + 4);
-    }
     html = html.replace(/\d+:\[\[\s*"\$[\s\S]*$/g, "");
     html = html.replace(/\[\\"\$[\s\S]*$/g, "");
     return html;
 }
 
-function extractChapterHtml(raw) {
-    raw = String(raw || "");
-    if (raw.indexOf("chapter-content") >= 0) {
-        try {
-            let doc = Html.parse(unwrapTemplates(raw));
-            let box = doc.select(".chapter-content").first();
-            if (box) {
-                let inner = box.html() || "";
-                if (inner.indexOf("skl-line") < 0 && inner.replace(/\s/g, "").length > 80) {
-                    return cleanChapterHtml(inner);
-                }
+function isSkeletonChapterHtml(html) {
+    html = String(html || "");
+    if (!html) return true;
+    if (html.indexOf("skl-line") >= 0) return true;
+    if (html.indexOf("<p") < 0 && html.indexOf("<br") < 0) return true;
+    return html.replace(/\s/g, "").length < 80;
+}
+
+function extractChapterFromDom(doc, html) {
+    if (doc) {
+        let boxes = doc.select(".chapter-content");
+        for (let i = 0; i < boxes.size(); i++) {
+            let inner = boxes.get(i).html() || "";
+            if (!isSkeletonChapterHtml(inner)) {
+                return cleanChapterHtml(inner);
             }
-        } catch (e) {
         }
     }
-    let joined = collectNextFlight(raw);
-    if (!joined) return "";
+    html = String(html || "");
+    let marker = "class=\"chapter-content\"";
+    let pos = 0;
+    while (pos < html.length) {
+        let idx = html.indexOf(marker, pos);
+        if (idx < 0) {
+            break;
+        }
+        let gt = html.indexOf(">", idx);
+        if (gt < 0) {
+            break;
+        }
+        let start = gt + 1;
+        let end = html.indexOf("</div>", start);
+        if (end < 0) {
+            break;
+        }
+        let inner = html.substring(start, end);
+        if (!isSkeletonChapterHtml(inner)) {
+            return cleanChapterHtml(inner);
+        }
+        pos = end + 6;
+    }
+    return "";
+}
+
+function extractChapterFromEscaped(raw) {
+    raw = String(raw || "");
+    let markers = ["\\u003cp\\u003e", "\\u003cbr\\u003e", "\\u003cdiv\\u003e"];
     let best = "";
-    let re = /:T([0-9a-f]+),/g;
-    let m = re.exec(joined);
-    while (m) {
-        let start = m.index + m[0].length;
-        let slice = joined.substring(start, start + 120000);
+    for (let m = 0; m < markers.length; m++) {
+        let mk = markers[m];
+        let pos = 0;
+        while (pos < raw.length) {
+            let idx = raw.indexOf(mk, pos);
+            if (idx < 0) {
+                break;
+            }
+            let chunk = raw.substring(idx, idx + 150000);
+            let cut = chunk.search(/\\n\d+[a-zA-Z0-9_]*:|\\",\\"link\\"|\[\\"\$/);
+            if (cut >= 0) {
+                chunk = chunk.substring(0, cut);
+            }
+            let dec = cleanChapterHtml(decodeJsUnicode(chunk));
+            if (dec.length > best.length) {
+                best = dec;
+            }
+            pos = idx + mk.length;
+        }
+    }
+    return best;
+}
+
+function extractChapterFromFlight(raw) {
+    let joined = collectNextFlight(raw);
+    if (!joined) {
+        return "";
+    }
+    let best = "";
+    let marker = ":T";
+    let pos = 0;
+    while (pos < joined.length) {
+        let idx = joined.indexOf(marker, pos);
+        if (idx < 0) {
+            break;
+        }
+        let comma = joined.indexOf(",", idx);
+        if (comma < 0) {
+            break;
+        }
+        let slice = joined.substring(comma + 1, comma + 120001);
         let cut = slice.search(/\\n\d+[a-zA-Z0-9_]*:|\\",\\"link\\"|\[\\"\$/);
         if (cut >= 0) {
             slice = slice.substring(0, cut);
         }
-        if (slice.indexOf("\\u003c") >= 0 || slice.indexOf("\\u003cbr") >= 0) {
+        if (slice.indexOf("\\u003c") >= 0) {
             let dec = cleanChapterHtml(decodeJsUnicode(slice));
             if (dec.length > best.length) {
                 best = dec;
             }
         }
-        m = re.exec(joined);
-    }
-    if (best.length >= 200) {
-        return best;
-    }
-    let fallbackRe = /\\u003c(?:p|br|img|div|span|h2|h3|blockquote)[\s\S]{100,80000}/g;
-    let fm = fallbackRe.exec(joined);
-    while (fm) {
-        let dec = cleanChapterHtml(decodeJsUnicode(fm[0]));
-        if (dec.length > best.length && dec.indexOf("skl") < 0) {
-            best = dec;
-        }
-        fm = fallbackRe.exec(joined);
+        pos = comma + 1;
     }
     return best;
+}
+
+function extractChapterHtml(raw) {
+    raw = String(raw || "");
+    let doc = null;
+    try {
+        doc = Html.parse(unwrapTemplates(raw));
+    } catch (e) {
+        doc = null;
+    }
+    let html = extractChapterFromDom(doc, raw);
+    if (html) {
+        return html;
+    }
+    html = extractChapterFromEscaped(raw);
+    if (html) {
+        return html;
+    }
+    html = extractChapterFromFlight(raw);
+    if (html) {
+        return html;
+    }
+    return "";
 }
 
 function decodeHtmlEntities(text) {

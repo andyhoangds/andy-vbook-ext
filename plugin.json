@@ -130,7 +130,7 @@
       "name": "Valvrareteam",
       "author": "Andy",
       "path": "https://cdn.jsdelivr.net/gh/andyhoangds/andy-vbook-ext@main/valvrareteam/plugin.zip",
-      "version": 2,
+      "version": 3,
       "source": "https://valvrareteam.net",
       "icon": "https://cdn.jsdelivr.net/gh/andyhoangds/andy-vbook-ext@main/valvrareteam/icon.png",
       "regexp": "(www\\.)?valvrareteam\\.net/truyen/[^/]+/?$",

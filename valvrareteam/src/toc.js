@@ -27,7 +27,7 @@ function execute(url) {
     }
 
     if (data.length === 0 && html) {
-        let re = /<a[^>]+href="(\/truyen\/[^"]+\/chuong\/[^"]+)"[^>]*class="[^"]*chapter-title-link[^"]*"[^>]*>([^<]+)<\/a>/g;
+        let re = /href="(\/truyen\/[^"]+\/chuong\/[^"]+)"[^>]*class="[^"]*chapter-title-link[^"]*"[^>]*>([^<]+)</g;
         let m = re.exec(html);
         while (m) {
             let link = absUrl(m[1]);
@@ -40,6 +40,23 @@ function execute(url) {
                 });
             }
             m = re.exec(html);
+        }
+    }
+
+    if (data.length === 0 && html) {
+        let re2 = /href="(\/truyen\/[^"]+\/chuong\/[^"]+)"/g;
+        let m2 = re2.exec(html);
+        while (m2) {
+            let link = absUrl(m2[1]);
+            if (!seen[link]) {
+                seen[link] = true;
+                data.push({
+                    name: link.substring(link.lastIndexOf("/") + 1).replace(/-/g, " "),
+                    url: link,
+                    host: BASE_URL
+                });
+            }
+            m2 = re2.exec(html);
         }
     }
 
