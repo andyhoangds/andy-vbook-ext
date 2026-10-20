@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Valvrareteam",
     "author": "Andy",
-    "version": 1,
+    "version": 2,
     "source": "https://valvrareteam.net",
     "regexp": "(www\\.)?valvrareteam\\.net/truyen/[^/]+/?$",
     "description": "Đọc Light Novel Vietsub trên valvrareteam.net",
