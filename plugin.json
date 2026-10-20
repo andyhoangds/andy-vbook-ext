@@ -129,10 +129,10 @@
     {
       "name": "Valvrareteam",
       "author": "Andy",
-      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/valvrareteam/plugin.zip",
-      "version": 1,
+      "path": "https://cdn.jsdelivr.net/gh/andyhoangds/andy-vbook-ext@main/valvrareteam/plugin.zip",
+      "version": 2,
       "source": "https://valvrareteam.net",
-      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/valvrareteam/icon.png",
+      "icon": "https://cdn.jsdelivr.net/gh/andyhoangds/andy-vbook-ext@main/valvrareteam/icon.png",
       "regexp": "(www\\.)?valvrareteam\\.net/truyen/[^/]+/?$",
       "description": "Đọc Light Novel Vietsub trên valvrareteam.net",
       "locale": "vi_VN",
