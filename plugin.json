@@ -125,6 +125,18 @@
       "description": "Đọc truyện chữ Trung trên UU看書, dịch Vietphrase trong app",
       "locale": "zh_CN",
       "type": "chinese_novel"
+    },
+    {
+      "name": "Valvrareteam",
+      "author": "Andy",
+      "path": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/valvrareteam/plugin.zip",
+      "version": 1,
+      "source": "https://valvrareteam.net",
+      "icon": "https://raw.githubusercontent.com/andyhoangds/andy-vbook-ext/main/valvrareteam/icon.png",
+      "regexp": "(www\\.)?valvrareteam\\.net/truyen/[^/]+/?$",
+      "description": "Đọc Light Novel Vietsub trên valvrareteam.net",
+      "locale": "vi_VN",
+      "type": "novel"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "name": "Valvrareteam",
+    "author": "Andy",
+    "version": 1,
+    "source": "https://valvrareteam.net",
+    "regexp": "(www\\.)?valvrareteam\\.net/truyen/[^/]+/?$",
+    "description": "Đọc Light Novel Vietsub trên valvrareteam.net",
+    "locale": "vi_VN",
+    "language": "javascript",
+    "type": "novel"
+  },
+  "script": {
+    "home": "home.js",
+    "genre": "genre.js",
+    "detail": "detail.js",
+    "search": "search.js",
+    "toc": "toc.js",
+    "chap": "chap.js"
+  }
+}
